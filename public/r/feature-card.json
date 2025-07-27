@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "feature-card",
+  "type": "registry:component",
+  "title": "Feature Card",
+  "description": "A versatile card component for showcasing features with icons, descriptions, and call-to-action buttons.",
+  "registryDependencies": [
+    "button",
+    "card"
+  ],
+  "files": [
+    {
+      "path": "registry/new-york/blocks/feature-card/feature-card.tsx",
+      "content": "import { Card, CardContent, CardDescription, CardHeader, CardTitle } from \"@/registry/new-york/ui/card\"\nimport { Button } from \"@/registry/new-york/ui/button\"\nimport { cn } from \"@/lib/utils\"\n\ninterface FeatureCardProps {\n  title: string\n  description: string\n  icon?: React.ReactNode\n  buttonText?: string\n  onButtonClick?: () => void\n  variant?: \"default\" | \"highlighted\"\n  className?: string\n}\n\nexport function FeatureCard({\n  title,\n  description,\n  icon,\n  buttonText = \"Learn More\",\n  onButtonClick,\n  variant = \"default\",\n  className,\n}: FeatureCardProps) {\n  return (\n    <Card\n      className={cn(\n        \"relative overflow-hidden transition-all duration-300 hover:shadow-lg\",\n        variant === \"highlighted\" &&\n          \"border-primary/20 bg-primary/5 hover:border-primary/30\",\n        className\n      )}\n    >\n      {variant === \"highlighted\" && (\n        <div className=\"absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary to-transparent\" />\n      )}\n      <CardHeader className=\"pb-4\">\n        <div className=\"flex items-start gap-3\">\n          {icon && (\n            <div\n              className={cn(\n                \"flex h-10 w-10 shrink-0 items-center justify-center rounded-lg\",\n                variant === \"highlighted\"\n                  ? \"bg-primary/10 text-primary\"\n                  : \"bg-muted text-muted-foreground\"\n              )}\n            >\n              {icon}\n            </div>\n          )}\n          <div className=\"space-y-1\">\n            <CardTitle className=\"text-xl\">{title}</CardTitle>\n            <CardDescription className=\"text-sm leading-relaxed\">\n              {description}\n            </CardDescription>\n          </div>\n        </div>\n      </CardHeader>\n      {(buttonText || onButtonClick) && (\n        <CardContent className=\"pt-0\">\n          <Button\n            variant={variant === \"highlighted\" ? \"default\" : \"outline\"}\n            size=\"sm\"\n            onClick={onButtonClick}\n            className=\"w-full\"\n          >\n            {buttonText}\n          </Button>\n        </CardContent>\n      )}\n    </Card>\n  )\n}\n",
+      "type": "registry:component"
+    }
+  ]
+}
