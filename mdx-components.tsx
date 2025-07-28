@@ -10,6 +10,7 @@ const generator = createGenerator();
 export function getMDXComponents(components?: MDXComponents): MDXComponents {
   return {
     ...defaultMdxComponents,
+    // @TODO: This is slowing down the page load, to check later
     AutoTypeTable: (props) => (
       <AutoTypeTable {...props} generator={generator} />
     ),

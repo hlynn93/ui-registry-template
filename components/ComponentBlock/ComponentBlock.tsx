@@ -22,8 +22,9 @@ function Preview({ path, type }: PreviewProps) {
   const Component = React.lazy(
     async () => {
       const mod = await import(`@/registry/${path}`);
-      const exportName = Object.keys(mod).find(key => typeof mod[key] === 'function' || typeof mod[key] === 'object') || item.name
-      return { default: mod.default || mod[exportName] }
+      const exportName = Object.keys(mod).find(key => typeof mod[key] === 'function' || typeof mod[key] === 'object')
+
+      return { default: mod.default || mod[exportName ?? ''] }
     }
   )
   return (
