@@ -1,58 +1,81 @@
-import React from "react";
+'use client'
+
+import React, { Suspense } from "react";
 import { Tab, Tabs } from "fumadocs-ui/components/tabs";
+import { DynamicCodeBlock } from 'fumadocs-ui/components/dynamic-codeblock';
 
 // @TODO: To add theme wrapper from the registry
 
-export type ReactComponentBlockProps = {
+export type ComponentBlockProps = {
   name: string;
   description: string;
   type: string;
-  chidlren?: React.ReactNode;
+  path: string
 };
 
-function Preview({ name, description, type }: ReactComponentBlockProps) {
+type PreviewProps = {
+  path: string;
+  type?: string
+}
+
+function Preview({ path, type }: PreviewProps) {
+  const Component = React.lazy(
+    async () => {
+      const mod = await import(`@/registry/${path}`);
+      const exportName = Object.keys(mod).find(key => typeof mod[key] === 'function' || typeof mod[key] === 'object') || item.name
+      return { default: mod.default || mod[exportName] }
+    }
+  )
   return (
-    <div>
-      <h1>{name}</h1>
-      <p>{description}</p>
-      <p>{type}</p>
-    </div>
+    <Suspense fallback={<div>Loading...</div>}>
+      {
+        type === "block" ? (
+          // handle block preview later
+          <Component />
+        ) : (
+          <Component />
+        )
+      }
+    </Suspense>
   );
 }
 
-function CodeBlock({ name }: { name: string }) {
+function CodeView({ name }: { name: string }) {
   return (
-    <pre>
-      <code>
-        {`import { ${name} } from 'your-component-library';\n\n<${name} />`}
-      </code>
-    </pre>
+    <DynamicCodeBlock
+      lang="ts"
+      code={
+`import { ${name} } from 'your-component-library';
+
+<${name} />`
+  }
+    />
   )
 }
 
-function ReactComponentBlock(args: ReactComponentBlockProps) {
+function ComponentBlock(args: ComponentBlockProps) {
   const {
     name,
-    description,
     type,
-    children,
+    path,
+    // children,
   } = args;
-  const [Example, Code, ...Children] = React.Children.toArray(
-    children
-  ) as React.ReactElement[]
-  console.log(Example, Code, Children);
+  // const [Example, Code, ...Children] = React.Children.toArray(
+  //   children
+  // ) as React.ReactElement[]
+  // console.log(Example, Code, Children);
   return (
     <div>
       <Tabs items={["Preview", "Code"]}>
-        <Tab>
-          <Preview name={name} description={description} type={type} />
+        <Tab className="flex justify-center direction-row items-center">
+          <Preview type={type} path={path} />
         </Tab>
         <Tab>
-          <CodeBlock name={name} />
+          <CodeView name={name} />
         </Tab>
       </Tabs>
     </div>
   );
 }
 
-export default ReactComponentBlock;
+export default ComponentBlock;
