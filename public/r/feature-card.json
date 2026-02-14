@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "feature-card",
+  "title": "Feature Card",
+  "description": "A versatile card component for showcasing features with icons, descriptions, and call-to-action buttons.",
+  "registryDependencies": [
+    "button",
+    "card"
+  ],
+  "files": [
+    {
+      "path": "registry/aui/blocks/feature-card/feature-card.tsx",
+      "content": "import { Button } from \"@/registry/aui/ui/button\"\nimport {\n  Card,\n  CardContent,\n  CardDescription,\n  CardFooter,\n  CardHeader,\n  CardTitle,\n} from \"@/registry/aui/ui/card\"\nimport type { LucideIcon } from \"lucide-react\"\n\nexport interface FeatureCardProps {\n  icon: LucideIcon\n  title: string\n  description: string\n  actionLabel?: string\n  onAction?: () => void\n}\n\nexport function FeatureCard({\n  icon: Icon,\n  title,\n  description,\n  actionLabel = \"Learn more\",\n  onAction,\n}: FeatureCardProps) {\n  return (\n    <Card>\n      <CardHeader>\n        <div className=\"flex items-center gap-2\">\n          <Icon className=\"size-5 text-primary\" />\n          <CardTitle>{title}</CardTitle>\n        </div>\n        <CardDescription>{description}</CardDescription>\n      </CardHeader>\n      <CardContent />\n      <CardFooter>\n        <Button variant=\"outline\" onClick={onAction}>\n          {actionLabel}\n        </Button>\n      </CardFooter>\n    </Card>\n  )\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "type": "registry:component"
+}

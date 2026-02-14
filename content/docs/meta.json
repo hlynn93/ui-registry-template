@@ -1,0 +1,13 @@
+{
+  "title": "UI Horizontal Registry",
+  "description": "A collection of UI components built with shadcn/ui.",
+  "icon": "Cuboid",
+  "root": true,
+  "pages": [
+    "---Overview---",
+    "index",
+    "getting-started",
+    "---Spaces---",
+    "aui"
+  ]
+}
