@@ -1,6 +1,6 @@
 {
-  "title": "UI Horizontal Registry",
-  "description": "A collection of UI components built with shadcn/ui.",
+  "title": "Registry",
+  "description": "A custom component registry built with Base UI and shadcn.",
   "icon": "Cuboid",
   "root": true,
   "pages": [

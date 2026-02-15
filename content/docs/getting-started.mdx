@@ -1,12 +1,32 @@
 ---
 title: Getting Started
-description: Learn how to set up and use the UI Horizontal Registry.
+description: Learn how to set up and use the registry.
 ---
 
 ## Installation
 
-To get started with the UI Horizontal Registry, you can install it using npm or yarn:
+Install components from the registry using the `shadcn` CLI. Replace `<your-registry-url>` with the URL where your registry is hosted.
 
 ```bash
-npm install ui-horizontal-registry
+npx shadcn@latest add <your-registry-url>/r/<component-name>.json
+```
+
+For example, to install the `hello-world` component:
+
+```bash
+npx shadcn@latest add https://acme.com/r/hello-world.json
+```
+
+This will download the component files into your project and install any required dependencies automatically.
+
+## Usage
+
+Once installed, import and use the component in your project:
+
+```tsx
+import { HelloWorld } from "@/components/hello-world";
+
+export default function Page() {
+  return <HelloWorld />;
+}
 ```

@@ -1,25 +1,36 @@
 ---
 title: Example Form
-description: Learn how to set up and use the AUI example form.
+description: A contact form with Zod validation.
 ---
 
 <ComponentBlock
   name="Example Form"
-  description="A chat widget for the AUI space."
+  description="A contact form with Zod validation."
   type="block"
   path="aui/blocks/example-form/example-form.tsx"
 />
 
 ## Installation
 
-To get started with the AUI chat widget, you can install it using npm or yarn:
-
 ```bash
-npm install aui-example-form
+npx shadcn@latest add https://acme.com/r/example-form.json
 ```
+
+This will install the component along with its dependencies (`zod`) and registry dependencies (`button`, `input`, `label`, `textarea`, `card`).
+
+## Usage
+
+```tsx
+import { ExampleForm } from "@/components/example-form";
+
+export default function Page() {
+  return <ExampleForm />;
+}
+```
+
+## Props
 
 <AutoTypeTable
   path="./registry/aui/blocks/example-form/type.ts"
   name="ExampleFormProps"
 />
-##

@@ -4,24 +4,28 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-A shadcn/ui component registry built with Next.js 15, React 19, Fumadocs, and Tailwind CSS v4. Components are authored in `registry/`, built to static JSON via `shadcn build`, and served from `public/r/[name].json` for installation via the shadcn CLI.
+A shadcn/ui component registry (named "acme") built with Next.js 15, React 19, Fumadocs, and Tailwind CSS v4. Components are authored in `registry/`, built to static JSON via `shadcn build`, and served from `public/r/[name].json` for installation via the shadcn CLI. Node is pinned via Volta (v25.6.0).
 
 ## Commands
 
 - `pnpm dev` — Start dev server (Turbopack)
 - `pnpm build` — Production build
-- `pnpm lint` — ESLint
+- `pnpm lint` — ESLint (next/core-web-vitals + next/typescript)
 - `pnpm registry:build` — Build registry JSON files from `registry.json` into `public/r/*.json`
 - `pnpm postinstall` — Runs `fumadocs-mdx` to compile MDX (also runs automatically after install)
+
+No test framework is configured.
 
 ## Architecture
 
 ### Registry System
 
-1. **`registry.json`** — Manifest defining all distributable components (name, files, dependencies, registryDependencies)
-2. **`registry/aui/`** — Component source files organized into `ui/` (primitives like button, card, input) and `blocks/` (composed components like example-form)
+1. **`registry.json`** — Manifest defining all distributable components (name, files, dependencies, registryDependencies). Each file entry has a `type` (e.g. `registry:component`, `registry:page`, `registry:lib`, `registry:hook`)
+2. **`registry/aui/`** — Component source files: `ui/` for primitives (button, card, input, label, textarea) and `blocks/` for composed components (each in its own directory)
 3. **`shadcn build`** reads `registry.json` and outputs `public/r/[name].json` — these are the distributable artifacts
 4. **`components.json`** — shadcn config (style: "aui", aliases, Tailwind settings)
+
+Path alias: `@/*` maps to the project root.
 
 ### Documentation System (Fumadocs)
 
@@ -29,15 +33,15 @@ A shadcn/ui component registry built with Next.js 15, React 19, Fumadocs, and Ta
 - **`content/docs/meta.json`** — Sidebar navigation structure
 - **`source.config.ts`** — Fumadocs source configuration pointing to `content/docs`
 - **`lib/source.ts`** — Loader that creates the page tree from compiled MDX
-- **`.source/`** — Auto-generated directory from `fumadocs-mdx` (compiled MDX imports)
+- **`.source/`** — Auto-generated directory from `fumadocs-mdx` (do not edit)
 - **`app/[[...slug]]/page.tsx`** — Catch-all route that renders MDX docs pages
 - **`app/api/search/route.ts`** — Full-text search endpoint (Orama)
 
 ### Custom MDX Components
 
 Registered in `mdx-components.tsx`:
-- **`ComponentBlock`** (`components/ComponentBlock/`) — Client component that dynamically imports registry components for preview. Accepts `name`, `description`, `type`, `path` props. Uses `React.lazy` with a dynamic import from `@/registry/`.
-- **`AutoTypeTable`** — Generates API docs from TypeScript types via `fumadocs-typescript`
+- **`ComponentBlock`** (`components/ComponentBlock/`) — Client component that dynamically imports registry components for live preview. The `path` prop is relative to `registry/` (e.g. `path="aui/blocks/example-form/example-form.tsx"`). Uses `React.lazy` with dynamic import from `@/registry/`.
+- **`AutoTypeTable`** — Generates API docs from TypeScript types via `fumadocs-typescript`. Takes `path` (to the .ts file) and `name` (export name) props.
 
 ### Styling
 

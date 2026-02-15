@@ -1,23 +1,55 @@
 # registry-template
 
-You can use the `shadcn` CLI to run your own component registry. Running your own
-component registry allows you to distribute your custom components, hooks, pages, and
-other files to any React project.
+A custom component registry based on the [shadcn registry template](https://github.com/shadcn-ui/registry-template), with [Radix UI](https://www.radix-ui.com/) replaced by [Base UI](https://base-ui.com/). Component documentation is built with [Fumadocs](https://fumadocs.vercel.app/).
 
-> [!IMPORTANT]  
-> This template uses Tailwind v4. For Tailwind v3, see [registry-template](https://github.com/shadcn-ui/registry-template).
+Built with Next.js 15, React 19, and Tailwind CSS v4.
 
 ## Getting Started
 
-This is a template for creating a custom registry using Next.js.
+### Prerequisites
 
-- The template uses a `registry.json` file to define components and their files.
-- The `shadcn build` command is used to build the registry.
-- The registry items are served as static files under `public/r/[name].json`.
-- The template also includes a route handler for serving registry items.
-- Every registry item are compatible with the `shadcn` CLI.
-- We have also added v0 integration using the `Open in v0` api.
+- Node.js (pinned to v25.6.0 via Volta)
+- pnpm
+
+### Install dependencies
+
+```bash
+pnpm install
+```
+
+### Development
+
+```bash
+pnpm dev
+```
+
+### Build
+
+```bash
+pnpm build
+```
+
+### Lint
+
+```bash
+pnpm lint
+```
+
+### Build registry
+
+Build the registry JSON files from `registry.json` into `public/r/*.json`:
+
+```bash
+pnpm registry:build
+```
+
+## How It Works
+
+- Components are defined in `registry.json` and authored under `registry/aui/`.
+- `shadcn build` reads the manifest and outputs static JSON files to `public/r/[name].json`.
+- Every registry item is compatible with the `shadcn` CLI for installation into any React project.
+- Documentation pages live in `content/docs/` as MDX files and are rendered by Fumadocs.
 
 ## Documentation
 
-Visit the [shadcn documentation](https://ui.shadcn.com/docs/registry) to view the full documentation.
+Visit the [shadcn documentation](https://ui.shadcn.com/docs/registry) for more details on the registry system.
